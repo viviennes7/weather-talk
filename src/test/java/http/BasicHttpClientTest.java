@@ -28,4 +28,15 @@ public class BasicHttpClientTest {
 
         assertThat(code, is(200));
     }
+
+    /*@Test(expected = NotFoundException.class)
+    public void post_notfound_url() {
+        this.basicHttpClient.post("http://test111.net", new HashMap<>());
+    }*/
+
+    @Test(expected = IllegalStateException.class)
+    public void post_malformed_url() {
+        this.basicHttpClient.post("abcdef", new HashMap<>());
+    }
+
 }
