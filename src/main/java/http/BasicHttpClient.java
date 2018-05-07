@@ -56,7 +56,7 @@ public class BasicHttpClient implements HttpClient {
     }
 
     private BufferedWriter getBufferedWriter(OutputStream os) throws UnsupportedEncodingException {
-        return new BufferedWriter(new OutputStreamWriter(os, UTF_8));
+        return new BufferedWriter(new OutputStreamWriter(os, UTF8));
     }
 
     private String getQuery(Map<String, Object> params) {
@@ -68,9 +68,9 @@ public class BasicHttpClient implements HttpClient {
             else result.append("&");
 
             try {
-                result.append(URLEncoder.encode(key, UTF_8));
+                result.append(URLEncoder.encode(key, UTF8));
                 result.append("=");
-                result.append(URLEncoder.encode(params.get(key).toString(), UTF_8));
+                result.append(URLEncoder.encode(params.get(key).toString(), UTF8));
             } catch (UnsupportedEncodingException e) {
                 throw new UTF8EncodingException();
             }
@@ -98,7 +98,7 @@ public class BasicHttpClient implements HttpClient {
 
     static public class UTF8EncodingException extends RuntimeException {
         public UTF8EncodingException() {
-            super(format("URLencoder가 %s로 인코딩 중 문제가 발생하였습니다.", UTF_8));
+            super(format("URLencoder가 %s로 인코딩 중 문제가 발생하였습니다.", UTF8));
         }
     }
 }
