@@ -1,8 +1,8 @@
 package messenger;
 
-import http.BasicHttpClient;
 import http.HttpClient;
 import http.HttpResponse;
+import http.OkayHttpClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,13 +32,13 @@ public class SlackMessengerTest {
     @Test
     public void noConstructor() {
         SlackMessenger slackMessenger = new SlackMessenger();
-        assertThat(slackMessenger.getHttpClient()).isInstanceOf(BasicHttpClient.class);
+        assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
     }
 
     @Test
     public void oneConstructor() {
-        SlackMessenger slackMessenger = new SlackMessenger(new BasicHttpClient());
-        assertThat(slackMessenger.getHttpClient()).isInstanceOf(BasicHttpClient.class);
+        SlackMessenger slackMessenger = new SlackMessenger(new OkayHttpClient());
+        assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
     }
 
     @Test

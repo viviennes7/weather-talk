@@ -1,9 +1,9 @@
 package messenger;
 
 import common.PrivateKey;
-import http.BasicHttpClient;
 import http.HttpClient;
 import http.HttpResponse;
+import http.OkayHttpClient;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class SlackMessenger implements Messenger {
     private final HttpClient httpClient;
 
     public SlackMessenger() {
-        this.httpClient = new BasicHttpClient();
+        this.httpClient = new OkayHttpClient();
     }
 
     public SlackMessenger(HttpClient httpClient) {
