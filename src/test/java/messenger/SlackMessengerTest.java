@@ -2,6 +2,7 @@ package messenger;
 
 import http.BasicHttpClient;
 import http.HttpClient;
+import http.HttpResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -43,21 +45,21 @@ public class SlackMessengerTest {
 
     @Test
     public void send_성공() {
-        this.send(200);
+        this.send(new HttpResponse.Builder(200).build());
     }
 
     @Test
     public void send_서버에러() {
-        this.send(500);
+        this.send(new HttpResponse.Builder(500).build());
     }
 
-    private void send(int i) {
-        given(this.httpClient.post(anyString(), anyMap()))
-                .willReturn(i);
+    private void send(HttpResponse httpResponse) {
+        given(this.httpClient.post(anyString(), anyMap(), any()))
+                .willReturn(httpResponse);
 
         Map<String, String> params = new HashMap<>();
         params.put("text", "Hello World");
-        int response = this.slackMessenger.send(params);
-        assertThat(response).isEqualTo(i);
+        HttpResponse response = this.slackMessenger.send(params);
+        assertThat(response.getCode()).isEqualTo(httpResponse.getCode());
     }
 }

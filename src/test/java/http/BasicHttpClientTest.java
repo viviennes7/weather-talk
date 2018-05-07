@@ -24,9 +24,9 @@ public class BasicHttpClientTest {
         params.put("test", "test");
         params.put("test1", "test1");
 
-        int code = this.basicHttpClient.post("http://localhost:9000", params);
+        HttpResponse response = this.basicHttpClient.post("http://localhost:9000", params, null);
 
-        assertThat(code).isEqualTo(200);
+        assertThat(response.getCode()).isEqualTo(200);
     }
 
     /*@Test(expected = NotFoundException.class)
@@ -36,7 +36,7 @@ public class BasicHttpClientTest {
 
     @Test(expected = MalformedURLException.class)
     public void post_malformed_url() {
-        this.basicHttpClient.post("abcdef", new HashMap<>());
+        this.basicHttpClient.post("abcdef", new HashMap<>(), null);
     }
 
 }

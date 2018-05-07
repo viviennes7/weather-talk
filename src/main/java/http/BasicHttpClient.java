@@ -9,11 +9,20 @@ import static java.lang.String.format;
 public class BasicHttpClient implements HttpClient {
 
     @Override
-    public int post(String address, Map<String, String> params) {
+    public HttpResponse post(String address, Map<String, String> params, Map<String, String> headers) {
         URL url = this.getUrl(address);
         HttpURLConnection postConnection = this.getPostConnection(url);
         this.write(postConnection, params);
-        return this.getResponseCode(postConnection);
+        return new HttpResponse
+                .Builder(this.getResponseCode(postConnection))
+                .build();
+    }
+
+    @Override
+    public HttpResponse get(String address, Map<String, String> params, Map<String, String> headers) {
+        return new HttpResponse
+                .Builder(0)
+                .build();
     }
 
     private URL getUrl(String address) {

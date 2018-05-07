@@ -3,6 +3,7 @@ package messenger;
 import common.PrivateKey;
 import http.BasicHttpClient;
 import http.HttpClient;
+import http.HttpResponse;
 
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class SlackMessenger implements Messenger {
     }
 
     @Override
-    public int send(Map<String, String> params) {
-        return this.httpClient.post(URL + WEBHOOK_KEY, params);
+    public HttpResponse send(Map<String, String> params) {
+        return this.httpClient.post(URL + WEBHOOK_KEY, params, null);
     }
 
     HttpClient getHttpClient() {
