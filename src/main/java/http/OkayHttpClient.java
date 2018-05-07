@@ -1,6 +1,7 @@
 package http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;
 
@@ -24,16 +25,25 @@ public class OkayHttpClient implements HttpClient {
     }
 
     @Override
-    public HttpResponse get(String address, Map<String, String> params, Map<String, String> headers) {
-        Headers okHttpHeaders = Headers.of(headers);
+    public HttpResponse get(String address, Object param, Map<String, String> headers) {
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        return this.get(address, paramMap, headers);
+    }
+
+    @Override
+    public HttpResponse get(String address, Map<String, String> param, Map<String, String> headers) {
         Request request = new Request.Builder()
-                .url(address)
-                .headers(okHttpHeaders)
+                .url(address + this.getQuery(param))
+                .headers(Headers.of(headers))
                 .build();
 
-        Response response = this.getResponse(request);
+        return this.convertHttpResponse(this.getResponse(request));
+    }
 
-        return this.convertHttpResponse(response);
+    @Override
+    public HttpResponse post(String address, Object param, Map<String, String> headers) {
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        return this.post(address, paramMap, headers);
     }
 
     @Override
@@ -44,9 +54,7 @@ public class OkayHttpClient implements HttpClient {
                 .post(body)
                 .build();
 
-        Response response = this.getResponse(request);
-
-        return this.convertHttpResponse(response);
+        return this.convertHttpResponse(this.getResponse(request));
     }
 
     private HttpResponse convertHttpResponse(Response response) {
@@ -84,5 +92,24 @@ public class OkayHttpClient implements HttpClient {
         } catch (JsonProcessingException e) {
             throw new IllegalStateException("Map을 JSON으로 변환 중 문제가 발생했습니다.");
         }
+    }
+
+    private String getQuery(Map<String, String> params) {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        for (String key : params.keySet()) {
+            if (first) {
+                result.append("?");
+                first = false;
+            } else {
+                result.append("&");
+            }
+
+            result.append(key);
+            result.append("=");
+            result.append(params.get(key));
+        }
+        return result.toString();
     }
 }
