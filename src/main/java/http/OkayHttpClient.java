@@ -25,8 +25,10 @@ public class OkayHttpClient implements HttpClient {
 
     @Override
     public HttpResponse get(String address, Map<String, String> params, Map<String, String> headers) {
+        Headers okHttpHeaders = Headers.of(headers);
         Request request = new Request.Builder()
                 .url(address)
+                .headers(okHttpHeaders)
                 .build();
 
         Response response = this.getResponse(request);
