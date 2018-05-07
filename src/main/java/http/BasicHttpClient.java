@@ -9,7 +9,7 @@ import static java.lang.String.format;
 public class BasicHttpClient implements HttpClient {
 
     @Override
-    public int post(String address, Map params) {
+    public int post(String address, Map<String, String> params) {
         URL url = this.getUrl(address);
         HttpURLConnection postConnection = this.getPostConnection(url);
         this.write(postConnection, params);

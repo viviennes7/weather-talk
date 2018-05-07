@@ -1,7 +1,7 @@
 package messenger;
 
-import http.HttpClient;
+import java.util.Map;
 
 public interface Messenger {
-    void send(HttpClient httpClient, Message message);
+    int send(Map<String, String> params);
 }
