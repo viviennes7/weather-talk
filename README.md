@@ -1,4 +1,4 @@
-# weather-talk
+# Weather-talk
 
 ### Weather-talk이란?
 - 필요한 날씨정보만을 메신저를 통해서 알림을 받는 talk!
