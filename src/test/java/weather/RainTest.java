@@ -3,8 +3,6 @@ package weather;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class RainTest {
     private Rain rain;
 
@@ -15,6 +13,6 @@ public class RainTest {
 
     @Test
     public void isRainingToday() {
-        this.rain.isRainingToday();
+        this.rain.get();
     }
 }

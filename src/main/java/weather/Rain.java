@@ -1,5 +1,6 @@
 package weather;
 
+import com.jayway.jsonpath.JsonPath;
 import common.PrivateKey;
 import http.HttpClient;
 import http.HttpResponse;
@@ -7,6 +8,7 @@ import http.OkayHttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Rain {
     private static final String SKT_WEATHER_API_URL = "https://api2.sktelecom.com/weather/current/minutely";
@@ -20,14 +22,11 @@ public class Rain {
         this.httpClient = httpClient;
     }
 
-    public boolean isRainingToday() {
+    public Optional<RainCode> get() {
         Map<String, String> headers = new HashMap<>();
         headers.put("appKey", PrivateKey.WEATHER_API_KEY);
         HttpResponse response = this.httpClient.get(SKT_WEATHER_API_URL, WeatherParams.seoul(), headers);
-        String body = response.getBody();
-
-        //TODO 작업여기부터 시작~
-
-        return false;
+        String skyCode = JsonPath.read(response.getBody(), "$.weather.minutely[0].sky.code");
+        return RainCode.getMaybeRain(skyCode);
     }
 }
