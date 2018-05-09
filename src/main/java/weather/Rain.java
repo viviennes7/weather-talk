@@ -25,7 +25,7 @@ public class Rain {
 
     public Optional<RainCode> get() {
         Map<String, String> headers = new HashMap<>();
-        headers.put("appKey", PrivateKey.WEATHER_API_KEY);
+        headers.put("appKey", WEATHER_API_KEY);
         HttpResponse response = this.httpClient.get(SKT_WEATHER_API_URL, WeatherParams.seoul(), headers);
         String skyCode = JsonPath.read(response.getBody(), "$.weather.minutely[0].sky.code");
         return RainCode.getMaybeRain(skyCode);
