@@ -11,7 +11,7 @@ public class SlackMessenger implements Messenger {
 
     private static final String URL = "https://hooks.slack.com/services";
 
-    private static final String WEBHOOK_KEY = PrivateKey.SLACK_API_KEY;
+    private static final String SLACK_API_KEY = PrivateKey.SLACK_API_KEY;
 
     private final HttpClient httpClient;
 
@@ -25,7 +25,7 @@ public class SlackMessenger implements Messenger {
 
     @Override
     public HttpResponse send(Map<String, String> params) {
-        return this.httpClient.post(URL + WEBHOOK_KEY, params, null);
+        return this.httpClient.post(URL + SLACK_API_KEY, params, null);
     }
 
     HttpClient getHttpClient() {

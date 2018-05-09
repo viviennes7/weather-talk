@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public class Rain {
     private static final String SKT_WEATHER_API_URL = "https://api2.sktelecom.com/weather/current/minutely";
+    private static final String WEATHER_API_KEY = PrivateKey.WEATHER_API_KEY;
     private final HttpClient httpClient;
 
     public Rain() {
