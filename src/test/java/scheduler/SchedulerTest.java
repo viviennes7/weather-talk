@@ -14,7 +14,7 @@ public class SchedulerTest {
 
     @Test
     public void start() throws InterruptedException {
-        scheduler.execute(23, 8, 0, () -> System.out.println("Hello World"));
-        Thread.sleep(1000 * 1000);
+        scheduler.execute(9, 47, 0, () -> System.out.println("Hello World ::: 47"));
+        scheduler.execute(9, 48, 0, () -> System.out.println("Hello World ::: 48"));
     }
 }
