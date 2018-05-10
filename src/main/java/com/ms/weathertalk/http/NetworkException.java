@@ -1,4 +1,4 @@
-package http;
+package com.ms.weathertalk.http;
 
 public class NetworkException extends RuntimeException {
     public NetworkException(String message) {

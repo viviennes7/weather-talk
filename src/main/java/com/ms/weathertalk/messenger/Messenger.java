@@ -1,6 +1,6 @@
-package messenger;
+package com.ms.weathertalk.messenger;
 
-import http.HttpResponse;
+import com.ms.weathertalk.http.HttpResponse;
 
 import java.util.Map;
 

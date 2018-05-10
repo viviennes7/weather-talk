@@ -1,11 +1,10 @@
-package weather;
+package com.ms.weathertalk.weather;
 
 import java.util.Optional;
 
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static weather.RainCode.CLOUD_AND_RAIN_OR_SNOW;
 
 public class RainCodeTest {
 
@@ -13,7 +12,7 @@ public class RainCodeTest {
     public void getMaybeRain_존재하는_경우() {
         Optional<RainCode> rainCode = RainCode.getMaybeRain("SKY_A10");
         assertThat(rainCode.isPresent()).isTrue();
-        assertThat(rainCode.get()).isEqualTo(CLOUD_AND_RAIN_OR_SNOW);
+        assertThat(rainCode.get()).isEqualTo(RainCode.CLOUD_AND_RAIN_OR_SNOW);
     }
 
     @Test

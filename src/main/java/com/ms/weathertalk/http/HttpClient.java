@@ -1,4 +1,4 @@
-package http;
+package com.ms.weathertalk.http;
 
 import java.util.Map;
 

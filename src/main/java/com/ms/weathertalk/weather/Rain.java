@@ -1,17 +1,17 @@
-package weather;
+package com.ms.weathertalk.weather;
 
 import com.jayway.jsonpath.JsonPath;
-import common.PrivateKey;
-import http.HttpClient;
-import http.HttpResponse;
-import http.OkayHttpClient;
+import com.ms.weathertalk.common.PrivateKey;
+import com.ms.weathertalk.http.HttpClient;
+import com.ms.weathertalk.http.HttpResponse;
+import com.ms.weathertalk.http.OkayHttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class Rain {
-    private static final String SKT_WEATHER_API_URL = "https://api2.sktelecom.com/weather/current/minutely";
+    private static final String SKT_WEATHER_API_URL = "https://api2.sktelecom.com/com.ms.weather/current/minutely";
     private static final String WEATHER_API_KEY = PrivateKey.WEATHER_API_KEY;
     private final HttpClient httpClient;
 

@@ -1,8 +1,9 @@
-package messenger;
+package com.ms.weathertalk.messenger;
 
-import http.HttpClient;
-import http.HttpResponse;
-import http.OkayHttpClient;
+import com.ms.weathertalk.http.HttpClient;
+import com.ms.weathertalk.http.HttpResponse;
+import com.ms.weathertalk.http.OkayHttpClient;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

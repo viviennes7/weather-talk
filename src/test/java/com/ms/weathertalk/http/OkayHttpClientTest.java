@@ -1,4 +1,4 @@
-package http;
+package com.ms.weathertalk.http;
 
 import okhttp3.*;
 import org.junit.Before;
@@ -8,11 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OkayHttpClientTest {

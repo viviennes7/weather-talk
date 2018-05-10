@@ -1,4 +1,4 @@
-package http;
+package com.ms.weathertalk.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,4 +1,4 @@
-package weather;
+package com.ms.weathertalk.weather;
 
 import lombok.Data;
 

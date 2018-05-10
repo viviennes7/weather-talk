@@ -1,9 +1,9 @@
-package messenger;
+package com.ms.weathertalk.messenger;
 
-import common.PrivateKey;
-import http.HttpClient;
-import http.HttpResponse;
-import http.OkayHttpClient;
+import com.ms.weathertalk.common.PrivateKey;
+import com.ms.weathertalk.http.HttpClient;
+import com.ms.weathertalk.http.HttpResponse;
+import com.ms.weathertalk.http.OkayHttpClient;
 
 import java.util.Map;
 

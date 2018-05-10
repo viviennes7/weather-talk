@@ -1,4 +1,4 @@
-package weather;
+package com.ms.weathertalk.weather;
 
 import java.util.Optional;
 
@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import http.HttpClient;
-import http.HttpResponse;
+import com.ms.weathertalk.http.HttpClient;
+import com.ms.weathertalk.http.HttpResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;

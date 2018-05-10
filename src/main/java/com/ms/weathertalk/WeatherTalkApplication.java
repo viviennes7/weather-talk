@@ -1,5 +1,7 @@
-import http.OkayHttpClient;
-import messenger.SlackMessenger;
+package com.ms.weathertalk;
+
+import com.ms.weathertalk.http.OkayHttpClient;
+import com.ms.weathertalk.messenger.SlackMessenger;
 
 import java.util.HashMap;
 import java.util.Map;

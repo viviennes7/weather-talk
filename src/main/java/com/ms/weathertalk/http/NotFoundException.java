@@ -1,4 +1,4 @@
-package http;
+package com.ms.weathertalk.http;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException() {

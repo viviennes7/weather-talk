@@ -1,4 +1,4 @@
-package scheduler;
+package com.ms.weathertalk.scheduler;
 
 import java.time.Duration;
 import java.time.ZoneId;
@@ -24,7 +24,6 @@ public class Scheduler {
 
     public Scheduler(int poolSize) {
         this.scheduler = Executors.newScheduledThreadPool(poolSize);
-        this.executeBackgroud();
     }
 
     public void execute(int hour, int minute, int second, Runnable runnable) {
@@ -49,21 +48,6 @@ public class Scheduler {
 
     private boolean isOverDay(ZonedDateTime zonedNow, ZonedDateTime sevenHour) {
         return zonedNow.compareTo(sevenHour) > 0;
-    }
-
-    private void executeBackgroud() {
-        System.out.println("executeBackgroud()");
-        new Thread(() -> {
-            while (true) {
-                System.out.println("while");
-                try {
-                    Thread.sleep(5 * 1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
     }
 
 }
