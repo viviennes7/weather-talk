@@ -26,7 +26,11 @@ public class Scheduler {
         this.scheduler = Executors.newScheduledThreadPool(poolSize);
     }
 
-    public void execute(int hour, int minute, int second, Runnable runnable) {
+    public void executeNow(Runnable command) {
+        scheduler.scheduleAtFixedRate(command, 1, ONE_DAY_AS_SECOND, SECONDS);
+    }
+
+    public void execute(int hour, int minute, int second, Runnable command) {
         ZonedDateTime now = ZonedDateTime.of(now(), ZoneId.of(SEOUL_ZONE));
 
         ZonedDateTime nextExecutionTime;
@@ -38,7 +42,7 @@ public class Scheduler {
         if (this.isOverDay(now, nextExecutionTime))
             nextExecutionTime = nextExecutionTime.plusDays(ONE_DAY);
 
-        scheduler.scheduleAtFixedRate(runnable, this.getInitialExecutionTime(now, nextExecutionTime), ONE_DAY_AS_SECOND, SECONDS);
+        scheduler.scheduleAtFixedRate(command, this.getInitialExecutionTime(now, nextExecutionTime), ONE_DAY_AS_SECOND, SECONDS);
     }
 
     private long getInitialExecutionTime(ZonedDateTime now, ZonedDateTime nextExecutionTime) {

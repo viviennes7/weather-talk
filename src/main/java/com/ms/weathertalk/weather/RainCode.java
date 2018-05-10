@@ -7,6 +7,7 @@ import java.util.Optional;
 
 @Getter
 public enum RainCode {
+    TEST("TEST", "TEST"),
     MANY_CLOUD_AND_RAIN("SKY_A04", "구름많고 비"),
     MANY_CLOUD_AND_SNOW("SKY_A05", "구름많고 눈"),
     MANY_CLOUD_AND_RAIN_OR_SNOW("SKY_A06", "구름많고 비 또는 눈"),

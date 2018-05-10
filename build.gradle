@@ -12,6 +12,9 @@ repositories {
 dependencies {
     compileOnly "org.projectlombok:lombok:1.16.16"
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    //TODO 아래거도 구현해줘야되는 이유 찾기
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.26'
+
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
     compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.4.0'
     compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.4.0'

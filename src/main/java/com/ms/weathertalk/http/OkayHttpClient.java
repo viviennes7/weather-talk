@@ -12,8 +12,8 @@ import java.util.Map;
 
 @Slf4j
 public class OkayHttpClient implements HttpClient {
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public static final String EMPTY = "";
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final String EMPTY = "";
 
     private OkHttpClient okHttpClient;
 
@@ -46,6 +46,7 @@ public class OkayHttpClient implements HttpClient {
         Request request = new Request.Builder()
                 .url(address)
                 .post(body)
+                .headers(Headers.of(headers))
                 .build();
 
         return this.convertHttpResponse(this.getResponse(request));

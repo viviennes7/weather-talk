@@ -5,6 +5,7 @@ import com.ms.weathertalk.http.HttpClient;
 import com.ms.weathertalk.http.HttpResponse;
 import com.ms.weathertalk.http.OkayHttpClient;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class SlackMessenger implements Messenger {
@@ -24,8 +25,8 @@ public class SlackMessenger implements Messenger {
     }
 
     @Override
-    public HttpResponse send(Map<String, String> params) {
-        return this.httpClient.post(URL + SLACK_API_KEY, params, null);
+    public HttpResponse send(Map<String, String> messageForm) {
+        return this.httpClient.post(URL + SLACK_API_KEY, messageForm, new HashMap<>());
     }
 
     HttpClient getHttpClient() {
