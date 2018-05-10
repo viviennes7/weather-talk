@@ -3,13 +3,17 @@ package http;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 public class OkayHttpClient implements HttpClient {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    public static final String EMPTY = "";
 
     private OkHttpClient okHttpClient;
 
@@ -27,13 +31,8 @@ public class OkayHttpClient implements HttpClient {
     @Override
     public HttpResponse get(String address, Object param, Map<String, String> headers) {
         Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
-        return this.get(address, paramMap, headers);
-    }
-
-    @Override
-    public HttpResponse get(String address, Map<String, String> param, Map<String, String> headers) {
         Request request = new Request.Builder()
-                .url(address + this.getQuery(param))
+                .url(address + this.getQuery(paramMap))
                 .headers(Headers.of(headers))
                 .build();
 
@@ -43,12 +42,7 @@ public class OkayHttpClient implements HttpClient {
     @Override
     public HttpResponse post(String address, Object param, Map<String, String> headers) {
         Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
-        return this.post(address, paramMap, headers);
-    }
-
-    @Override
-    public HttpResponse post(String address, Map<String, String> params, Map<String, String> headers) {
-        RequestBody body = RequestBody.create(JSON, this.getJsonParams(params));
+        RequestBody body = RequestBody.create(JSON, this.getJsonParams(paramMap));
         Request request = new Request.Builder()
                 .url(address)
                 .post(body)
@@ -94,11 +88,16 @@ public class OkayHttpClient implements HttpClient {
         }
     }
 
-    private String getQuery(Map<String, String> params) {
+    private String getQuery(Map<String, String> param) {
+        if(param == null){
+            log.debug("param이 없습니다.");
+            return EMPTY;
+        }
+
         StringBuilder result = new StringBuilder();
         boolean first = true;
 
-        for (String key : params.keySet()) {
+        for (String key : param.keySet()) {
             if (first) {
                 result.append("?");
                 first = false;
@@ -108,7 +107,7 @@ public class OkayHttpClient implements HttpClient {
 
             result.append(key);
             result.append("=");
-            result.append(params.get(key));
+            result.append(param.get(key));
         }
         return result.toString();
     }
