@@ -19,11 +19,11 @@ public class WeatherTalkClient {
     }
 
     public void execute() {
-        scheduler.executeNow(new WeatherTalkRunner());
+        scheduler.execute(7, 0, 0, new WeatherTalkRunner());
     }
 
     public class WeatherTalkRunner implements Runnable {
-        public static final String SLACK_MESSAGE_KEY = "text";
+        private static final String SLACK_MESSAGE_KEY = "text";
         private final SlackMessenger slackMessenger;
         private final Rain rain;
 
@@ -38,7 +38,7 @@ public class WeatherTalkClient {
             RainCode rainCode = maybeRain.orElse(RainCode.TEST);
 
             Map<String, String> messageForm = new HashMap<>();
-            messageForm.put(SLACK_MESSAGE_KEY, format("`%s`  입니다.",  rainCode.getContent()));
+            messageForm.put(SLACK_MESSAGE_KEY, format("`%s` 우산을 챙기세요.",  rainCode.getContent()));
 
             this.slackMessenger.send(messageForm);
         }
