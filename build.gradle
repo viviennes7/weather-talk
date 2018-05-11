@@ -1,9 +1,12 @@
 group 'com.ms'
-version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
+mainClassName = 'com.ms.weathertalk.WeatherTalkApplication'
 sourceCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+version '0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -22,4 +25,15 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.1'
     testCompile group: 'org.mockito', name: 'mockito-core', version: '2.18.3'
+}
+
+jar {
+    manifest {
+        attributes  'Title': 'Weather Talk', 'Version': version, 'Main-Class': mainClassName
+    }
+    archiveName 'weather-talk.jar'
+    dependsOn configurations.runtime
+    from {
+        configurations.compile.collect {it.isDirectory()? it: zipTree(it)}
+    }
 }
