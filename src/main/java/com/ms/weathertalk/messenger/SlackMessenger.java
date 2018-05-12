@@ -1,6 +1,5 @@
 package com.ms.weathertalk.messenger;
 
-import com.ms.weathertalk.common.PrivateKey;
 import com.ms.weathertalk.http.HttpClient;
 import com.ms.weathertalk.http.HttpResponse;
 import com.ms.weathertalk.http.OkayHttpClient;

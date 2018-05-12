@@ -4,8 +4,9 @@ out/
 out
 !/.gitignore
 .gradle
+!gradle-wrapper.jar
+.travis.yml
 /build/
 
-!gradle-wrapper.jar
+/.travis.yml
 
-/src/main/java/com/ms/weathertalk/common/PrivateKey.java

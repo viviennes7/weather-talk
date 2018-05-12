@@ -1,6 +1,6 @@
 package com.ms.weathertalk;
 
-import com.ms.weathertalk.common.PrivateKey;
+import com.ms.weathertalk.common.APIConfig;
 import com.ms.weathertalk.messenger.SlackMessenger;
 import com.ms.weathertalk.scheduler.Scheduler;
 import com.ms.weathertalk.weather.Rain;
@@ -34,8 +34,8 @@ public class WeatherTalkClient {
         private final Rain rain;
 
         public WeatherTalkRunner() {
-            this.rain = new Rain(PrivateKey.WEATHER_API_KEY);
-            this.slackMessenger = new SlackMessenger(PrivateKey.SLACK_API_KEY);
+            this.rain = new Rain(APIConfig.WEATHER_API_KEY);
+            this.slackMessenger = new SlackMessenger(APIConfig.SLACK_API_KEY);
         }
 
         @Override
