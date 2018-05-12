@@ -42,8 +42,8 @@ public class Scheduler {
         return duration.getSeconds();
     }
 
-    private boolean isOverDay(ZonedDateTime zonedNow, ZonedDateTime sevenHour) {
-        return zonedNow.compareTo(sevenHour) > 0;
+    private boolean isOverDay(ZonedDateTime zonedNow, ZonedDateTime nextExecutionTime) {
+        return zonedNow.compareTo(nextExecutionTime) > 0;
     }
 
 }

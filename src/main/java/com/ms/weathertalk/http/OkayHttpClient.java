@@ -75,7 +75,7 @@ public class OkayHttpClient implements HttpClient {
         try {
             body = response.body().string();
         } catch (IOException e) {
-            throw new IllegalStateException("body를 가져오는 중 문제가 발생했습니다. ::: " + e.getMessage());
+            throw new IllegalStateException("body를 String으로 변환 중 문제가 발생했습니다. ::: " + e.getMessage());
         }
         return body;
     }

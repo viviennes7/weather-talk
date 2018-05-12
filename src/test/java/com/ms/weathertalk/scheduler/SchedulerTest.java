@@ -1,9 +1,12 @@
 package com.ms.weathertalk.scheduler;
 
+import org.junit.Test;
+
 public class SchedulerTest {
 
-    public static void main(String[] args)  {
+    @Test
+    public void execute()  {
         Scheduler scheduler = new Scheduler();
-        scheduler.execute(16, 46, 0, () -> System.out.println("Hello World !!!"));
+        scheduler.execute(0, 0, 0, () -> System.out.println("Hello World !!!"));
     }
 }
