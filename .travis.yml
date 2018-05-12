@@ -6,9 +6,9 @@ branches:
   only:
     - master
 
-before_install:
- - chmod +x gradlew
-
+env :
+  WEATHER_API_KEY: $WEATHER_API_KEY
+  SLACK_API_KEY: $SLACK_API_KEY
 
 # Travis CI 서버의 Cache 활성화
 #cache:
@@ -16,5 +16,4 @@ before_install:
 #    - '$HOME/.m2/repository'
 #    - '$HOME/.gradle'
 
-# clean 후 Build (Build시 자동으로 test 수행)
 script: "./gradlew clean build"
