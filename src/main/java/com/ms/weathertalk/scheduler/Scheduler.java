@@ -19,15 +19,7 @@ public class Scheduler {
     private final ScheduledExecutorService scheduler;
 
     public Scheduler() {
-        this(SINGLE_POOL_SIZE);
-    }
-
-    public Scheduler(int poolSize) {
-        this.scheduler = Executors.newScheduledThreadPool(poolSize);
-    }
-
-    public void executeNow(Runnable command) {
-        scheduler.scheduleAtFixedRate(command, 1, ONE_DAY_AS_SECOND, SECONDS);
+        this.scheduler = Executors.newScheduledThreadPool(SINGLE_POOL_SIZE);
     }
 
     public void execute(int hour, int minute, int second, Runnable command) {

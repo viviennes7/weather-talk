@@ -46,7 +46,7 @@ public class WeatherTalkClient {
             if (rain.isRain()) {
                 String message = format("현재 날씨는 `%s` 입니다.\n오늘 예상 강우량은 `%s` 입니다. \n우산을 챙기세요. ",
                         content, rain.getRainfall());
-                log.info(message);
+                log.info("\n" + message);
                 this.send(message);
             } else {
                 log.info("현재 날씨는 비가 오지 않습니다.");
