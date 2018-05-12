@@ -27,18 +27,18 @@ public class SlackMessengerTest {
 
     @Before
     public void setup() {
-        this.slackMessenger = new SlackMessenger(httpClient);
+        this.slackMessenger = new SlackMessenger("apiKey", httpClient);
     }
 
     @Test
     public void noConstructor() {
-        SlackMessenger slackMessenger = new SlackMessenger();
+        SlackMessenger slackMessenger = new SlackMessenger("apiKey");
         assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
     }
 
     @Test
     public void oneConstructor() {
-        SlackMessenger slackMessenger = new SlackMessenger(new OkayHttpClient());
+        SlackMessenger slackMessenger = new SlackMessenger("apiKey", new OkayHttpClient());
         assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
     }
 

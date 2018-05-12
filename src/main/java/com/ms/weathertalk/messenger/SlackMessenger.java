@@ -7,26 +7,28 @@ import com.ms.weathertalk.http.OkayHttpClient;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SlackMessenger implements Messenger {
-
     private static final String URL = "https://hooks.slack.com/services";
 
-    private static final String SLACK_API_KEY = PrivateKey.SLACK_API_KEY;
+    private final String apiKey;
 
     private final HttpClient httpClient;
 
-    public SlackMessenger() {
-        this.httpClient = new OkayHttpClient();
+    public SlackMessenger(String apiKey) {
+        this(apiKey, new OkayHttpClient());
     }
 
-    public SlackMessenger(HttpClient httpClient) {
+    public SlackMessenger(String apiKey, HttpClient httpClient) {
+        Objects.requireNonNull("apiKey가 반드시 필요합니다.");
+        this.apiKey = apiKey;
         this.httpClient = httpClient;
     }
 
     @Override
     public HttpResponse send(Map<String, String> messageForm) {
-        return this.httpClient.post(URL + SLACK_API_KEY, messageForm, new HashMap<>());
+        return this.httpClient.post(URL + this.apiKey, messageForm, new HashMap<>());
     }
 
     HttpClient getHttpClient() {

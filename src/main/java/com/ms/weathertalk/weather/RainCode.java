@@ -3,11 +3,10 @@ package com.ms.weathertalk.weather;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 @Getter
 public enum RainCode {
-    TEST("TEST", "TEST"),
+    NO_RAIN("SKY_A00", "비 안옴"),
     MANY_CLOUD_AND_RAIN("SKY_A04", "구름많고 비"),
     MANY_CLOUD_AND_SNOW("SKY_A05", "구름많고 눈"),
     MANY_CLOUD_AND_RAIN_OR_SNOW("SKY_A06", "구름많고 비 또는 눈"),
@@ -27,9 +26,10 @@ public enum RainCode {
         this.content = content;
     }
 
-    public static Optional<RainCode> getMaybeRain(String code) {
+    public static RainCode get(String code) {
         return Arrays.stream(values())
                 .filter(v -> code.equals(v.code))
-                .findFirst();
+                .findFirst()
+                .orElse(NO_RAIN);
     }
 }

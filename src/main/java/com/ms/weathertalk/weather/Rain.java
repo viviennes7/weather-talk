@@ -5,29 +5,47 @@ import com.ms.weathertalk.common.PrivateKey;
 import com.ms.weathertalk.http.HttpClient;
 import com.ms.weathertalk.http.HttpResponse;
 import com.ms.weathertalk.http.OkayHttpClient;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Objects;
+
+import static com.ms.weathertalk.weather.RainCode.NO_RAIN;
 
 public class Rain {
-    private static final String SKT_WEATHER_API_URL = "https://api2.sktelecom.com/weather/current/minutely";
-    private static final String WEATHER_API_KEY = PrivateKey.WEATHER_API_KEY;
+    private static final String URL = "https://api2.sktelecom.com/weather/current/minutely";
     private final HttpClient httpClient;
+    private final String apiKey;
 
-    public Rain() {
-        this.httpClient = new OkayHttpClient();
+    public Rain(String apiKey) {
+        this(apiKey, new OkayHttpClient());
     }
 
-    public Rain(HttpClient httpClient) {
+    public Rain(String apiKey, HttpClient httpClient) {
+        Objects.requireNonNull("apiKey가 반드시 필요합니다.");
+        this.apiKey = apiKey;
         this.httpClient = httpClient;
     }
 
-    public Optional<RainCode> get() {
+    public Detail get() {
         Map<String, String> headers = new HashMap<>();
-        headers.put("appKey", WEATHER_API_KEY);
-        HttpResponse response = this.httpClient.get(SKT_WEATHER_API_URL, WeatherParams.seoul(), headers);
+        headers.put("appKey", this.apiKey);
+        HttpResponse response = this.httpClient.get(URL, WeatherParams.seoul(), headers);
         String skyCode = JsonPath.read(response.getBody(), "$.weather.minutely[0].sky.code");
-        return RainCode.getMaybeRain(skyCode);
+        String rainfall = JsonPath.read(response.getBody(), "$.weather.minutely[0].rain.sinceMidnight");
+        return new Detail(RainCode.get(skyCode), Double.parseDouble(rainfall));
+    }
+
+    @Data
+    @AllArgsConstructor
+    static public class Detail {
+        private RainCode rainCode;
+        private Double rainfall;
+
+        public boolean isRain() {
+            return this.rainCode != NO_RAIN || this.rainfall > 0;
+        }
     }
 }

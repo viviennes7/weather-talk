@@ -54,7 +54,7 @@ public class OkayHttpClient implements HttpClient {
 
     private HttpResponse convertHttpResponse(Response response) {
         return new HttpResponse
-                .Builder<>(response.code())
+                .Builder(response.code())
                 .headers(response.headers().toMultimap())
                 .body(this.getBody(response))
                 .build();
@@ -71,12 +71,11 @@ public class OkayHttpClient implements HttpClient {
     }
 
     private String getBody(Response response) {
-        String body = null;
+        String body;
         try {
             body = response.body().string();
         } catch (IOException e) {
-            //TODO 명시적으로 해줘~
-            e.printStackTrace();
+            throw new IllegalStateException("body를 가져오는 중 문제가 발생했습니다. ::: " + e.getMessage());
         }
         return body;
     }
@@ -85,7 +84,7 @@ public class OkayHttpClient implements HttpClient {
         try {
             return this.objectMapper.writeValueAsString(params);
         } catch (JsonProcessingException e) {
-            throw new IllegalStateException("Map을 JSON으로 변환 중 문제가 발생했습니다.");
+            throw new IllegalStateException("Map을 JSON으로 변환 중 문제가 발생했습니다. ::: " + e.getMessage());
         }
     }
 
