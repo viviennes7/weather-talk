@@ -9,6 +9,7 @@ branches:
 env :
   WEATHER_API_KEY: $WEATHER_API_KEY
   SLACK_API_KEY: $SLACK_API_KEY
+  TELEGRAM_API_KEY: $TELEGRAM_API_KEY
 
 # Travis CI 서버의 Cache 활성화
 #cache:

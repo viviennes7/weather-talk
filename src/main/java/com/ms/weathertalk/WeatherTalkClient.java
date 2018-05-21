@@ -1,15 +1,14 @@
 package com.ms.weathertalk;
 
 import com.ms.weathertalk.common.APIConfig;
-import com.ms.weathertalk.messenger.SlackMessenger;
+import com.ms.weathertalk.messenger.Messenger;
+import com.ms.weathertalk.messenger.TelegramMessenger;
 import com.ms.weathertalk.scheduler.Scheduler;
 import com.ms.weathertalk.weather.Rain;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.String.format;
 
 @Slf4j
 public class WeatherTalkClient {
@@ -30,33 +29,31 @@ public class WeatherTalkClient {
 
     public class WeatherTalkRunner implements Runnable {
         private static final String SLACK_MESSAGE_KEY = "text";
-        private final SlackMessenger slackMessenger;
+        private final Messenger telegramMessenger;
         private final Rain rain;
 
         public WeatherTalkRunner() {
             this.rain = new Rain(APIConfig.WEATHER_API_KEY);
-            this.slackMessenger = new SlackMessenger(APIConfig.SLACK_API_KEY);
+            this.telegramMessenger = new TelegramMessenger(APIConfig.TELEGRAM_API_KEY, "595055476");
         }
 
         @Override
         public void run() {
             Rain.Detail rain = this.rain.get();
-            String content = rain.getRainCode().getContent();
+            String message = rain.getDefaultMeesage();
 
             if (rain.isRain()) {
-                String message = format("현재 날씨는 `%s` 입니다.\n오늘 예상 강우량은 `%s` 입니다. \n우산을 챙기세요. ",
-                        content, rain.getRainfall());
                 log.info("\n" + message);
                 this.send(message);
             } else {
-                log.info("현재 날씨는 비가 오지 않습니다.");
+                log.info(message);
             }
         }
 
         private void send(String message) {
             Map<String, String> messageForm = new HashMap<>();
             messageForm.put(SLACK_MESSAGE_KEY, message);
-            this.slackMessenger.send(messageForm);
+            this.telegramMessenger.send(messageForm);
         }
     }
 }

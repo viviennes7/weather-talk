@@ -3,7 +3,6 @@ package com.ms.weathertalk.messenger;
 import com.ms.weathertalk.http.HttpClient;
 import com.ms.weathertalk.http.HttpResponse;
 import com.ms.weathertalk.http.OkayHttpClient;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,37 +13,44 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SlackMessengerTest {
+public class TelegramMessengerTest {
 
-    private SlackMessenger slackMessenger;
+    private TelegramMessenger telegramMessenger;
 
     @Mock
     private HttpClient httpClient;
 
     @Before
     public void setup() {
-        this.slackMessenger = new SlackMessenger("apiKey", httpClient);
-    }
-
-    @Test
-    public void oneConstructor() {
-        SlackMessenger slackMessenger = new SlackMessenger("apiKey");
-        assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
+        this.telegramMessenger = new TelegramMessenger("apiKey", "chatId", httpClient);
     }
 
     @Test
     public void twoConstructor() {
-        SlackMessenger slackMessenger = new SlackMessenger("apiKey", new OkayHttpClient());
+        TelegramMessenger slackMessenger = new TelegramMessenger("apiKey", "chatId");
+        assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
+    }
+
+    @Test
+    public void threeConstructor() {
+        TelegramMessenger slackMessenger = new TelegramMessenger("apiKey", "chatId", new OkayHttpClient());
         assertThat(slackMessenger.getHttpClient()).isInstanceOf(OkayHttpClient.class);
     }
 
     @Test(expected = NullPointerException.class)
     public void constructor_apiKey_null_확인() {
-        new SlackMessenger(null);
+        new TelegramMessenger(null, "");
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void constructor_chatId_null_확인() {
+        new TelegramMessenger("", null);
     }
 
     @Test
@@ -63,7 +69,7 @@ public class SlackMessengerTest {
 
         Map<String, String> params = new HashMap<>();
         params.put("text", "Hello World");
-        HttpResponse response = this.slackMessenger.send(params);
+        HttpResponse response = this.telegramMessenger.send(params);
         assertThat(response.getCode()).isEqualTo(httpResponse.getCode());
     }
 }

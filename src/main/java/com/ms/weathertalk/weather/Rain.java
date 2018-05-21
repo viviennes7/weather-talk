@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.ms.weathertalk.weather.RainCode.NO_RAIN;
+import static java.lang.String.format;
 
 public class Rain {
     private static final String URL = "https://api2.sktelecom.com/weather/current/minutely";
@@ -45,6 +46,17 @@ public class Rain {
 
         public boolean isRain() {
             return this.rainCode != NO_RAIN || this.rainfall > 0;
+        }
+
+        public String getDefaultMeesage() {
+            String message;
+            if (this.isRain()) {
+                message = format("현재 날씨는 `%s` 입니다.\n오늘 예상 강우량은 `%s` 입니다. \n우산을 챙기세요. ",
+                        this.rainCode.getContent(), this.rainfall);
+            } else {
+                message = "현재 날씨는 비가 오지 않습니다.";
+            }
+            return message;
         }
     }
 }

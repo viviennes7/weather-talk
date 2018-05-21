@@ -12,14 +12,13 @@ import java.util.Map;
 public class APIConfig {
     public static final String WEATHER_API_KEY;
     public static final String SLACK_API_KEY;
+    public static final String TELEGRAM_API_KEY;
 
     static {
         Map<String, String> apiKey = getApiKey();
         WEATHER_API_KEY = apiKey.get("WEATHER_API_KEY");
         SLACK_API_KEY = apiKey.get("SLACK_API_KEY");
-
-        log.info(WEATHER_API_KEY);
-        log.info(SLACK_API_KEY);
+        TELEGRAM_API_KEY = apiKey.get("TELEGRAM_API_KEY");
     }
 
     public static Map<String, String> getApiKey() {

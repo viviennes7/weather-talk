@@ -20,7 +20,7 @@ public class SlackMessenger implements Messenger {
     }
 
     public SlackMessenger(String apiKey, HttpClient httpClient) {
-        Objects.requireNonNull("apiKey가 반드시 필요합니다.");
+        Objects.requireNonNull(apiKey, "apiKey가 반드시 필요합니다.");
         this.apiKey = apiKey;
         this.httpClient = httpClient;
     }
