@@ -64,7 +64,7 @@ public class TelegramMessengerTest {
     }
 
     private void send(HttpResponse httpResponse) {
-        given(this.httpClient.post(anyString(), anyMap(), any()))
+        given(this.httpClient.post(anyString(), anyMap()))
                 .willReturn(httpResponse);
 
         Map<String, String> params = new HashMap<>();

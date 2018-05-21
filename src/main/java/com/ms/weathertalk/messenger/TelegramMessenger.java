@@ -4,7 +4,6 @@ import com.ms.weathertalk.http.HttpClient;
 import com.ms.weathertalk.http.HttpResponse;
 import com.ms.weathertalk.http.OkayHttpClient;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,7 +34,7 @@ public class TelegramMessenger implements Messenger{
     @Override
     public HttpResponse send(Map<String, String> messageForm) {
         messageForm.put("chat_id", this.chatId);
-        return this.httpClient.post(format(URL, apiKey), messageForm, new HashMap<>());
+        return this.httpClient.post(format(URL, apiKey), messageForm);
     }
 
     HttpClient getHttpClient() {

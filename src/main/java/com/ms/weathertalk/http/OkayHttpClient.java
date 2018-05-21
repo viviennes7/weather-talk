@@ -8,16 +8,17 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 public class OkayHttpClient implements HttpClient {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private static final String EMPTY = "";
+    private static final String EMPTY_STRING = "";
 
-    private OkHttpClient okHttpClient;
+    private final OkHttpClient okHttpClient;
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public OkayHttpClient() {
         this(new OkHttpClient());
@@ -29,7 +30,28 @@ public class OkayHttpClient implements HttpClient {
     }
 
     @Override
+    public HttpResponse get(String address) {
+        Request request = new Request.Builder()
+                .url(address)
+                .build();
+        return this.convertHttpResponse(this.getResponse(request));
+    }
+
+    @Override
+    public HttpResponse get(String address, Object param) {
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        Request request = new Request.Builder()
+                .url(address + this.getQuery(paramMap))
+                .build();
+
+        return this.convertHttpResponse(this.getResponse(request));
+    }
+
+    @Override
     public HttpResponse get(String address, Object param, Map<String, String> headers) {
+        if (headers == null)
+            headers = new HashMap<>();
+
         Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
         Request request = new Request.Builder()
                 .url(address + this.getQuery(paramMap))
@@ -39,8 +61,33 @@ public class OkayHttpClient implements HttpClient {
         return this.convertHttpResponse(this.getResponse(request));
     }
 
+
+    @Override
+    public HttpResponse post(String address) {
+        Request request = new Request.Builder()
+                .url(address)
+                .build();
+
+        return this.convertHttpResponse(this.getResponse(request));
+    }
+
+    @Override
+    public HttpResponse post(String address, Object param) {
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        RequestBody body = RequestBody.create(JSON, this.getJsonParams(paramMap));
+        Request request = new Request.Builder()
+                .url(address)
+                .post(body)
+                .build();
+
+        return this.convertHttpResponse(this.getResponse(request));
+    }
+
     @Override
     public HttpResponse post(String address, Object param, Map<String, String> headers) {
+        if (headers == null)
+            headers = new HashMap<>();
+
         Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
         RequestBody body = RequestBody.create(JSON, this.getJsonParams(paramMap));
         Request request = new Request.Builder()
@@ -91,7 +138,7 @@ public class OkayHttpClient implements HttpClient {
     private String getQuery(Map<String, String> param) {
         if(param == null){
             log.debug("param이 없습니다.");
-            return EMPTY;
+            return EMPTY_STRING;
         }
 
         StringBuilder result = new StringBuilder();
