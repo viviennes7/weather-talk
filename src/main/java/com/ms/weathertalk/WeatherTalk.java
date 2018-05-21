@@ -11,15 +11,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class WeatherTalkClient {
+public class WeatherTalk {
     private final Scheduler scheduler;
 
-    public WeatherTalkClient() {
+    public WeatherTalk() {
         this.scheduler = new Scheduler();
     }
 
     public void execute() {
-        log.info("start !!!");
         this.executeNow();
         this.scheduler.execute(7, 0, 0, new WeatherTalkRunner());
     }
