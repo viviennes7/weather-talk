@@ -20,8 +20,7 @@ public enum RainCode {
     private String code;
     private String content;
 
-    //TODO 왜 앞에 private붙이면 경고문뜨지?
-    private RainCode(String code, String content) {
+    RainCode(String code, String content) {
         this.code = code;
         this.content = content;
     }
