@@ -19,6 +19,7 @@ public class WeatherTalkClient {
     }
 
     public void execute() {
+        log.info("start !!!");
         this.executeNow();
         this.scheduler.execute(7, 0, 0, new WeatherTalkRunner());
     }
