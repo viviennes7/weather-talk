@@ -8,6 +8,6 @@ public class WeatherTalkApplicationTest {
 
     @Test
     public void main() {
-//        WeatherTalkApplication.main(null);
+        WeatherTalkApplication.main(null);
     }
 }
