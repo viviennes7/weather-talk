@@ -5,5 +5,4 @@ out
 !/.gitignore
 .gradle
 !gradle-wrapper.jar
-.travis.yml
 /build/
