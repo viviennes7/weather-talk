@@ -11,3 +11,6 @@
 - __OOP__
 - Clean code
 - Test code
+
+### 자세한 내용
+ - http://alwayspr.tistory.com/29
