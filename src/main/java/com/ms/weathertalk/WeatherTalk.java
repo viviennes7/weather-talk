@@ -28,7 +28,6 @@ public class WeatherTalk {
     }
 
     public class WeatherTalkRunner implements Runnable {
-        private static final String SLACK_MESSAGE_KEY = "text";
         private final Messenger telegramMessenger;
         private final Rain rain;
 
@@ -42,6 +41,7 @@ public class WeatherTalk {
             Rain.Detail rain = this.rain.get();
             String message = rain.getDefaultMeesage();
 
+
             if (rain.isRain()) {
                 log.info("\n" + message);
                 this.send(message);
@@ -52,7 +52,8 @@ public class WeatherTalk {
 
         private void send(String message) {
             Map<String, String> messageForm = new HashMap<>();
-            messageForm.put(SLACK_MESSAGE_KEY, message);
+            messageForm.put("text", message);
+            messageForm.put("parse_mode", "Markdown");
             this.telegramMessenger.send(messageForm);
         }
     }
