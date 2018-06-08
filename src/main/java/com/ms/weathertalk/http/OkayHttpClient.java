@@ -17,7 +17,6 @@ public class OkayHttpClient implements HttpClient {
     private static final String EMPTY_STRING = "";
 
     private final OkHttpClient okHttpClient;
-
     private final ObjectMapper objectMapper;
 
     public OkayHttpClient() {
@@ -39,7 +38,7 @@ public class OkayHttpClient implements HttpClient {
 
     @Override
     public HttpResponse get(String address, Object param) {
-        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>() {});
         Request request = new Request.Builder()
                 .url(address + this.getQuery(paramMap))
                 .build();
@@ -52,7 +51,7 @@ public class OkayHttpClient implements HttpClient {
         if (headers == null)
             headers = new HashMap<>();
 
-        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>() {});
         Request request = new Request.Builder()
                 .url(address + this.getQuery(paramMap))
                 .headers(Headers.of(headers))
@@ -73,7 +72,7 @@ public class OkayHttpClient implements HttpClient {
 
     @Override
     public HttpResponse post(String address, Object param) {
-        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>() {});
         RequestBody body = RequestBody.create(JSON, this.getJsonParams(paramMap));
         Request request = new Request.Builder()
                 .url(address)
@@ -88,7 +87,7 @@ public class OkayHttpClient implements HttpClient {
         if (headers == null)
             headers = new HashMap<>();
 
-        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>(){});
+        Map<String, String> paramMap = this.objectMapper.convertValue(param, new TypeReference<Map<String, String>>() {});
         RequestBody body = RequestBody.create(JSON, this.getJsonParams(paramMap));
         Request request = new Request.Builder()
                 .url(address)
@@ -107,14 +106,21 @@ public class OkayHttpClient implements HttpClient {
                 .build();
     }
 
-    private Response getResponse(Request request) {
+    private Response getResponse(Request request) throws HttpException {
         Response response;
         try {
-            response = okHttpClient.newCall(request).execute();
+            response = this.okHttpClient.newCall(request).execute();
         } catch (IOException e) {
             throw new NetworkException(e.getMessage());
         }
+
+        this.verifySuccess(response);
         return response;
+    }
+
+    private void verifySuccess(Response response) {
+        if (!response.isSuccessful())
+            throw new HttpException(response.code(), this.getBody(response));
     }
 
     private String getBody(Response response) {
@@ -136,7 +142,7 @@ public class OkayHttpClient implements HttpClient {
     }
 
     private String getQuery(Map<String, String> param) {
-        if(param == null){
+        if (param == null) {
             log.debug("param이 없습니다.");
             return EMPTY_STRING;
         }

@@ -41,7 +41,6 @@ public class WeatherTalk {
             Rain.Detail rain = this.rain.get();
             String message = rain.getDefaultMeesage();
 
-
             if (rain.isRain()) {
                 log.info("\n" + message);
                 this.send(message);
